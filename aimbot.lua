@@ -95,5 +95,3 @@ game:GetService("RunService").RenderStepped:Connect(function()
 
     mousemoverel(delta.X, delta.Y) -- Move the mouse relative to the target's position
 end)
-
--- What the sigma
