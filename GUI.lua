@@ -63,20 +63,6 @@ sections.LegitSec:AddToggle({
         print("Aimbot Is Now : ", val)
     end
 })
-sections.LegitSec:AddBind({
-    text = "Aimbot Keybind",
-    flag = "aimbotKeybind",
-    nomouse = true,
-    noindicator = true,
-    tooltip = "Sets the Aimbot keybind (hold)",
-    mode = "hold",
-    bind = Enum.UserInputType.MouseButton2,
-    risky = false,
-    callback = function(v)
-        print("Aimbot keybind is now ", v)
-        aimbot.Keybind = v
-    end
-})
 
 sections.LegitSec:AddToggle({
     enabled = true,
