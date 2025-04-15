@@ -4,6 +4,7 @@ esp.LocalPlayer = game:GetService("Players").LocalPlayer
 esp.Camera = game.Workspace.CurrentCamera
 esp.ViewPortSize = esp.Camera.ViewportSize
 
+esp.Enabled = false
 esp.Color = Color3.fromRGB(255, 0, 0)
 esp.Thickness = 2
 esp.Transparency = 1
@@ -262,6 +263,10 @@ end
 
 esp.RunService.RenderStepped:Connect(function()
     esp.clearDrawings()
+
+    if esp.Enabled == false then
+        return
+    end
 
     for _, plr: Player in esp.PlayerList do
         if plr == esp.LocalPlayer then continue end
