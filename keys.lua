@@ -50,7 +50,7 @@ Keys.Codes = {
     ["MouseWheelDown"] = Enum.UserInputType.MouseWheel,
     ["Escape"] = Enum.KeyCode.Escape,
     ["Tab"] = Enum.KeyCode.Tab,
-    ["Enter"] = Enum.KeyCode.Return,
+    ["Return"] = Enum.KeyCode.Return,
     ["Backspace"] = Enum.KeyCode.Backspace,
     ["Space"] = Enum.KeyCode.Space,
     ["Up"] = Enum.KeyCode.Up,
@@ -63,6 +63,17 @@ Keys.Codes = {
     ["End"] = Enum.KeyCode.End,
     ["PageUp"] = Enum.KeyCode.PageUp,
     ["PageDown"] = Enum.KeyCode.PageDown,
+    ["Period"] = Enum.KeyCode.Period,
+    ["Comma"] = Enum.KeyCode.Comma,
+    ["Semicolon"] = Enum.KeyCode.Semicolon,
+    ["Quote"] = Enum.KeyCode.Quote,
+    ["Slash"] = Enum.KeyCode.Slash,
+    ["Backslash"] = Enum.KeyCode.Backslash,
+    ["LeftBracket"] = Enum.KeyCode.LeftBracket,
+    ["RightBracket"] = Enum.KeyCode.RightBracket,
+    ["Equals"] = Enum.KeyCode.Equals,
+    ["Minus"] = Enum.KeyCode.Minus,
+    ["GraveAccent"] = Enum.KeyCode.GraveAccent,
     ["F1"] = Enum.KeyCode.F1,
     ["F2"] = Enum.KeyCode.F2,
     ["F3"] = Enum.KeyCode.F3,
@@ -82,22 +93,37 @@ Keys.GetKey = function(keyName)
     return Keys.Codes[keyName] or Enum.KeyCode.Unknown
 end
 
-Keys.CreateListener = function(key:string?, callback)
+Keys.Listeners = {}
+
+Keys.CreateListener = function(id, key, callback)
     local keyCode
     if typeof(key) == "Enum" then
         keyCode = key
     elseif typeof(key) == "string" and Keys.Codes[key] then
         keyCode = Keys.GetKey(string.upper(key))
+    elseif typeof(key) == "string" then
+        error("Invalid key. Please print the keys list with {local variable}.Codes to see a list of available keys.")
     else
         error("Invalid key type. Expected Enum or string.")
     end
 
     local userInputService = game:GetService("UserInputService")
-    userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    local listener = userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
         if input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode == keyCode and not gameProcessedEvent then
             callback()
         end
     end)
+    table.insert(Keys.Listeners, {id, listener})
+end
+
+Keys.RemoveListener = function(id)
+    for i, listener in ipairs(Keys.Listeners) do
+        if listener[1] == id then
+            listener[2]:Disconnect()
+            table.remove(Keys.Listeners, i)
+            break
+        end
+    end
 end
 
 return Keys
