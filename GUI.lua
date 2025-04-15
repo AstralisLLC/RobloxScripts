@@ -81,19 +81,19 @@ sections.LegitSec:AddToggle({
 })
 
 sections.LegitSec:AddSlider({
-    text = "Aimbot FOV",
-    flag = "aimbotFov",
-    suffix = "FOV",
-    value = 75,
-    min = 1,
-    max = 500,
-    increment = 1,
-    tooltip = "Changes the aimbot fov",
-    risky = true,
-    callback = function(fov)
-        aimbot.fov = fov
-        print("Aimbot FOV Is Now : ", fov)
-    end
+    text = "Fov Sides", 
+	flag = 'fovSideSlider', 
+	suffix = "Sides", 
+	value = 100,
+	min = 3, 
+	max = 200,
+	increment = 1,
+	tooltip = "Changes the aimbot fov circle sides",
+	risky = true,
+	callback = function(s) 
+		print("Fov Sides : ".. s)
+        aimbot.numSides = s
+	end
 })
 
 sections.LegitSec.AddSlider({
@@ -106,9 +106,8 @@ sections.LegitSec.AddSlider({
     increment = 1,
     tooltip = "Changes the number of sides on the fov circle, may cause performance drop",
     risky = false,
-    callback = function(sides)
-        aimbot.numSides = sides
-        print("FOV Circle Sides Is Now : ", sides)
+    callback = function(v)
+        aimbot.numSides = v
     end
 })
 
