@@ -13,8 +13,6 @@ getgenv().luaguardvars = {
 
 local vars = {
     NotiText = "Enter desired notification text",
-    espEnabled = false,
-    espFlags = {"Name"},
     chamsEnabled = false,
     chamsColor = Color3.fromRGB(255, 0, 0),
     WS = 16,
@@ -148,7 +146,7 @@ sections.VisualSec:AddList({
     risky = false,
     dragging = false,
     focused = false,
-	value = "Name",
+	value = nil,
 	values = {
 		"Name",
 		"Team",
@@ -194,7 +192,7 @@ sections.VisualSec:AddText({
 
 library:SendNotification("Loaded Shitware.wtf!", 5, Color3.new(1,0,0))
 
-while task.wait() do
+esp.RunService.RenderStepped:Connect(function()
     if vars.WS_ENABLED then
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = vars.WS
     else
@@ -204,8 +202,7 @@ while task.wait() do
     if vars.chamsEnabled then
         for _,v in pairs(workspace:GetChildren()) do
             if v:IsA("Model") and v:FindFirstChild("Humanoid") and v.Name ~= game.Players.LocalPlayer.Name then
-                local highlight = Instance.new("Highlight")
-                highlight.Parent = v
+                local highlight = Instance.new("Highlight", v)
                 highlight.FillColor = vars.chamsColor
                 highlight.OutlineColor = Color3.fromRGB(0, 0, 0)
                 highlight.FillTransparency = 0.5
@@ -222,4 +219,4 @@ while task.wait() do
             end
         end
     end
-end
+end)
