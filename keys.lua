@@ -82,12 +82,12 @@ Keys.GetKey = function(keyName)
     return Keys.Codes[keyName] or Enum.KeyCode.Unknown
 end
 
-Keys.CreateListener = function(key, callback)
+Keys.CreateListener = function(key:string?, callback)
     local keyCode
-    if key:IsA("Enum") then
+    if typeof(key) == "Enum" then
         keyCode = key
-    elseif key:IsA("string") then
-        keyCode = Keys.GetKey(key)
+    elseif typeof(key) == "string" and Keys.Codes[string.upper(key)] then
+        keyCode = Keys.GetKey(string.upper(key))
     else
         error("Invalid key type. Expected Enum or string.")
     end
