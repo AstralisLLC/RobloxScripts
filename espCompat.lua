@@ -21,10 +21,7 @@ esp.Players = game:GetService("Players")
 esp.RunService = game:GetService("RunService")
 
 esp.Flags = {
-    ["Name"] = false,
-    ["Team"] = false, 
-    ["Distance"] = false, 
-    ["Health"] = false
+    ["Name"] = false
 }
 
 esp.PlayerList = {}

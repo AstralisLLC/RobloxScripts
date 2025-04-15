@@ -1,4 +1,7 @@
 -- Credits To The Original Devs @xz, @goof
+
+local esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/AstralisLLC/RobloxScripts/refs/heads/main/espCompat.lua"))()
+
 getgenv().Config = {
 	Invite = "informant.wtf",
 	Version = "0.0",
@@ -76,6 +79,10 @@ sections.MovementSec:AddSlider({
 	end
 })
 
+sections.VisualSec:AddSeparator({
+    text = "Chams"
+})
+
 sections.VisualSec:AddToggle({
 	enabled = true,
 	text = "Toggle Chams",
@@ -102,9 +109,39 @@ sections.VisualSec:AddColor({
     end
 })
 
+sections.VisualSec:AddSeparator({
+    text = "ESP"
+})
+
+sections.VisualSec:AddToggle({
+    enabled = true,
+    text = "Toggle ESP",
+    flag = "espToggle",
+    tooltip = "Toggles ESP",
+    risky = false,
+    callback = function(val)
+        print("ESP Is Now : ", val)
+        esp.Enabled = val
+    end
+})
+
+sections.VisualSec:AddColor({
+    enabled = true,
+    text = "ESP Color",
+    flag = "espColorPick",
+    tooltip = "Color Picker For ESP",
+    color = Color3.new(1, 1, 1),
+    trans = 0,
+    open = false,
+    callback = function(c)
+        print("ESP Color Is Now : ", c)
+        esp.Color = c
+    end
+})
+
 sections.VisualSec:AddList({
 	enabled = true,
-	text = "Flags",
+	text = "ESP Flags",
 	flag = "flagsSelector",
 	multi = true,
 	tooltip = "Selects Flags For ESP",
@@ -119,7 +156,8 @@ sections.VisualSec:AddList({
         "Health"
 	},
 	callback = function(v)
-	    print("List Value Is Now : ", v)
+        print("ESP Flags Are Now : ", v)
+        esp.Flags = v
 	end
 })
 
