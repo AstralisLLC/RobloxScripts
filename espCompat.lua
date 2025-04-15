@@ -21,7 +21,7 @@ esp.Players = game:GetService("Players")
 esp.RunService = game:GetService("RunService")
 
 esp.Flags = {
-    ["Name"] = false
+    "Name"
 }
 
 esp.PlayerList = {}
@@ -232,21 +232,21 @@ local function getBoundingBox(Character: Model)
     drawEspBox(BoxPosition, BoxSize, false, esp.Color)
 
     -- Draw player name and team on the left side of the box
-    if esp.Flags["Name"] and not esp.Flags["Team"] then
+    if esp.Flags.Name and not esp.Flags.Team then
         drawTextWithOffset(Name, 12, Vector2.new(BoxPosition.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(0, -BoxSize.Y/2), "AlignCenter")
-    elseif esp.Flags["Team"] and not esp.Flags["Name"] then
+    elseif esp.Flags.Team and not esp.Flags.Name then
         drawTextWithOffset(Team, 12, Vector2.new(BoxPosition.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(0, -BoxSize.Y/2), "AlignCenter")
-    elseif esp.Flags["Name"] and esp.Flags["Team"] then
+    elseif esp.Flags.Name and esp.Flags.Team then
         drawTextWithOffset(Name .. " | " .. Team, 12, Vector2.new(BoxPosition.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(0, -BoxSize.Y/2), "AlignCenter")
     end
 
     -- Draw player health and distance on the right side of the box
     local distance = math.floor((Character.HumanoidRootPart.Position - esp.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude)
-    if esp.Flags["Health"] and not esp.Flags["Distance"] then
+    if esp.Flags.Health and not esp.Flags.Distance then
         drawTextWithOffset("Health: " .. math.floor((Character.Humanoid.Health / Character.Humanoid.MaxHealth) * 100) or 0 .. "%", 12, Vector2.new(BoxPosition.X + BoxSize.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(0, -BoxSize.Y/2), "AlignCenter")
-    elseif esp.Flags["Distance"] and not esp.Flags["Health"] then
+    elseif esp.Flags.Distance and not esp.Flags.Health then
         drawTextWithOffset("Distance: " .. distance, 12, Vector2.new(BoxPosition.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(BoxSize.X + 2, 0), nil)
-    elseif esp.Flags["Health"] and esp.Flags["Distance"] then
+    elseif esp.Flags.Health and esp.Flags.Distance then
         drawTextWithOffset("Distance: " .. distance .. " | Health: " .. math.floor((Character.Humanoid.Health / Character.Humanoid.MaxHealth) * 100) .. "%", 12, Vector2.new(BoxPosition.X, BoxPosition.Y), Color3.fromRGB(255, 255, 255), Vector2.new(BoxSize.X + 2, 0), nil)
     end
 end
