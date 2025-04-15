@@ -269,3 +269,5 @@ esp.RunService.RenderStepped:Connect(function()
         getBoundingBox(plr.Character)
     end
 end)
+
+return esp
