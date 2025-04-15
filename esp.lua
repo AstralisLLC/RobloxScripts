@@ -30,7 +30,7 @@ local textBounds = Vector2.zero
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AstralisLLC/RobloxScripts/refs/heads/main/keys.lua"))()
+local Keys = loadstring(game:HttpGet("https://raw.githubusercontent.com/AstralisLLC/RobloxScripts/refs/heads/main/keys.lua"))()
 
 local PlayerList = {}
 local PlayerUtils = {}
@@ -311,7 +311,7 @@ horiz.Visible = true
 -- Toggle for fullbright
 game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
     if gameProcessedEvent then return end
-    if input.KeyCode == Keys.RightAlt then
+    if input.KeyCode == Keys.GeyKey("RightAlt") then
         fbEnabled = not fbEnabled
         Lighting.Ambient = fbEnabled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(0, 0, 0)
     end

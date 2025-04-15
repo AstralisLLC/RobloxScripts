@@ -1,4 +1,6 @@
-local Keys = {
+local Keys = {}
+
+Keys.Codes = {
     ["A"] = Enum.KeyCode.A,
     ["B"] = Enum.KeyCode.B,
     ["C"] = Enum.KeyCode.C,
@@ -76,16 +78,16 @@ local Keys = {
 }
 
 
-local function getKey(keyName)
-    return Keys[keyName] or Enum.KeyCode.Unknown
+Keys.GetKey = function(keyName)
+    return Keys.Codes[keyName] or Enum.KeyCode.Unknown
 end
 
-local function createListener(key, callback)
+Keys.CreateListener = function(key, callback)
     local keyCode
     if key:IsA("Enum") then
         keyCode = key
     elseif key:IsA("string") then
-        keyCode = getKey(key)
+        keyCode = Keys.GetKey(key)
     else
         error("Invalid key type. Expected Enum or string.")
     end
