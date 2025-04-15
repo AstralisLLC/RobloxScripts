@@ -99,3 +99,5 @@ Keys.CreateListener = function(key, callback)
         end
     end)
 end
+
+return Keys
