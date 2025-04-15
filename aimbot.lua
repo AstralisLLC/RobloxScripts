@@ -5,41 +5,40 @@ aimbot.Players = game.Players
 aimbot.LocalPlayer = aimbot.Players.LocalPlayer
 aimbot.ToggleFov = false
 aimbot.Toggled = false
-aimbot.Keybind = Enum.UserInputType.MouseButton2
+aimbot.Enabled = false
 aimbot.FovColor = Color3.new(1,1,1)
 aimbot.numSides = 100
+aimbot.fov = 75 -- Change this to change aimbot fov
+aimbot.targetPart = "Head"
+aimbot.circle = nil
 
-local PlayersList = {}
+aimbot.PlayersList = {}
 
 for _, v in aimbot.Players:GetPlayers() do
     if v ~= aimbot.LocalPlayer then
-        table.insert(PlayersList, v)
+        table.insert(aimbot.PlayersList, v)
     end
 end
 
 aimbot.Players.PlayerAdded:Connect(function(player)
-    table.insert(PlayersList, player)
+    table.insert(aimbot.PlayersList, player)
 end)
 
 aimbot.Players.PlayerRemoving:Connect(function(player)
-    for i, v in ipairs(PlayersList) do
+    for i, v in ipairs(aimbot.PlayersList) do
         if v == player then
-            table.remove(PlayersList, i)
+            table.remove(aimbot.PlayersList, i)
             break
         end
     end
 end)
 
-aimbot.circle = nil
 
 
-aimbot.Enabled = false
 
-aimbot.fov = 75 -- Change this to change aimbot fov
 
-aimbot.targetPart = "Head"
 
-local function drawFov()
+aimbot.drawFov = function()
     local fovCircle = Drawing.new("Circle")
     fovCircle.Position = aimbot.Camera.ViewportSize / Vector2.new(2, 2)
     fovCircle.Radius = aimbot.fov
@@ -57,7 +56,7 @@ local function getClosestToCenter()
     local target = nil
     local closest = math.huge
 
-    for _, v in PlayersList do
+    for _, v in aimbot.PlayersList do
         if v == aimbot.LocalPlayer then continue end
         if not v.Character then continue end
         if not v.Character:FindFirstChild(aimbot.targetPart) then continue end
@@ -74,12 +73,12 @@ local function getClosestToCenter()
 end
 
 game:GetService("UserInputService").InputBegan:Connect(function(input)
-    if input.UserInputType == aimbot.Keybind or input.KeyCode == aimbot.Keybind then
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
         aimbot.Enabled = true
     end
 end)
 game:GetService("UserInputService").InputEnded:Connect(function(input)
-    if input.UserInputType == aimbot.Keybind or input.KeyCode == aimbot.Keybind then
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
         aimbot.Enabled = false
     end
 end)
@@ -90,10 +89,9 @@ game:GetService("RunService").RenderStepped:Connect(function()
         aimbot.circle = nil
     end
     if aimbot.ToggleFov then
-        drawFov()
+        aimbot.drawFov()
     end
-    if aimbot.Toggled then
-        if not aimbot.Enabled then return end
+    if aimbot.Toggled and aimbot.Enabled then
 
         local target = getClosestToCenter()
         if not target then return end

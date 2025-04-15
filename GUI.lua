@@ -56,11 +56,11 @@ sections.LegitSec:AddToggle({
     enabled = true,
     text = "Toggle Aimbot",
     flag = "aimbotToggle",
-    tooltip = "Toggles Aimbot",
+    tooltip = "Toggles Aimbot, keybind is MouseButton2",
     risky = false,
     callback = function(val)
-        aimbot.Toggled = val
         print("Aimbot Is Now : ", val)
+        aimbot.Toggled = val
     end
 })
 
