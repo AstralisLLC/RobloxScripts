@@ -5,7 +5,7 @@ esp.Camera = game.Workspace.CurrentCamera
 esp.ViewPortSize = esp.Camera.ViewportSize
 
 esp.Enabled = false
-esp.Color = Color3.fromRGB(255, 0, 0)
+esp.Color = Color3.new(1, 0, 0)
 esp.Thickness = 2
 esp.Transparency = 1
 esp.Filled = false
@@ -20,7 +20,22 @@ esp.textBounds = Vector2.zero
 esp.Players = game:GetService("Players")
 esp.RunService = game:GetService("RunService")
 
-esp.Flags = {}
+esp.Flags = {
+    ["Name"] = false,
+    ["Team"] = false,
+    ["Health"] = false,
+    ["Distance"] = false
+}
+
+esp.UpdateFlags = function(tableOfFlags)
+    for _, flag in pairs(tableOfFlags) do
+        if table.find(esp.Flags, flag) then
+            esp.Flags[flag] = true
+        else
+            esp.Flags[flag] = false
+        end
+    end
+end
 
 esp.PlayerList = {}
 esp.PlayerUtils = {}

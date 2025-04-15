@@ -128,7 +128,7 @@ sections.VisualSec:AddColor({
     text = "ESP Color",
     flag = "espColorPick",
     tooltip = "Color Picker For ESP",
-    color = Color3.new(1, 1, 1),
+    color = Color3.new(1, 0, 0),
     trans = 0,
     open = false,
     callback = function(c)
@@ -154,8 +154,11 @@ sections.VisualSec:AddList({
         "Health"
 	},
 	callback = function(v)
-        print("ESP Flags Are Now : ", v)
-        esp.Flags = v
+        for _, z in pairs(v) do
+            print(z)
+        end
+
+        esp.UpdateFlags(v)
 	end
 })
 
