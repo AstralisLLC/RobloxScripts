@@ -1,6 +1,7 @@
 -- Credits To The Original Devs @xz, @goof
 
 local esp = loadstring(game:HttpGet("https://raw.githubusercontent.com/AstralisLLC/RobloxScripts/refs/heads/main/espCompat.lua"))()
+local aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/AstralisLLC/RobloxScripts/refs/heads/main/aimbot.lua"))()
 
 getgenv().Config = {
 	Invite = "informant.wtf",
@@ -32,18 +33,122 @@ local Window = library.NewWindow({
 })
 
 local tabs = {
+    AimTab = Window:AddTab("Aimbot"),
     LocalTab = Window:AddTab("Local"),
 	Settings = library:CreateSettingsTab(Window),
 }
 
 
 local sections = {
+    LegitSec = tabs.AimTab:AddSection("Legit", 1),
+    RageSec = tabs.AimTab:AddSection("Rage", 2),
 	MovementSec = tabs.LocalTab:AddSection("Movement", 1),
 	VisualSec = tabs.LocalTab:AddSection("Placeholder", 2),
 }
 
+--//-------AIMBOT-------\\--
+
+sections.LegitSec:AddSeparator({
+    text = "Legit Aimbot"
+})
+
+sections.LegitSec:AddToggle({
+    enabled = true,
+    text = "Toggle Aimbot",
+    flag = "aimbotToggle",
+    tooltip = "Toggles Aimbot",
+    risky = false,
+    callback = function(val)
+        aimbot.Toggled = val
+        print("Aimbot Is Now : ", val)
+    end
+})
+sections.LegitSec:AddBind({
+    text = "Aimbot Keybind",
+    flag = "aimbotKeybind",
+    nomouse = true,
+    noindicator = true,
+    tooltip = "Sets the Aimbot keybind (hold)",
+    mode = "hold",
+    bind = Enum.UserInputType.MouseButton2,
+    risky = false,
+    callback = function(v)
+        print("Aimbot keybind is now ", v)
+        aimbot.Keybind = v
+    end
+})
+
+sections.LegitSec:AddToggle({
+    enabled = true,
+    text = "Draw FOV",
+    flag = "drawFov",
+    tooltip = "Toggles Aimbot FOV Circle",
+    risky = false,
+    callback = function(val)
+        aimbot.DrawFov = val
+        if val then
+            aimbot.ToggleFov = true
+        else
+            aimbot.ToggleFov = false
+        end
+    end
+})
+
+sections.LegitSec:AddSlider({
+    text = "Aimbot FOV",
+    flag = "aimbotFov",
+    suffix = "FOV",
+    value = 75,
+    min = 1,
+    max = 500,
+    increment = 1,
+    tooltip = "Changes the aimbot fov",
+    risky = true,
+    callback = function(fov)
+        aimbot.fov = fov
+        print("Aimbot FOV Is Now : ", fov)
+    end
+})
+
+sections.LegitSec.AddSlider({
+    text = "FOV Circle Sides",
+    flag = "fovSides",
+    suffix = "Sides",
+    value = 100,
+    min = 3,
+    max = 200,
+    increment = 1,
+    tooltip = "Changes the number of sides on the fov circle, may cause performance drop",
+    risky = false,
+    callback = function(sides)
+        aimbot.numSides = sides
+        print("FOV Circle Sides Is Now : ", sides)
+    end
+})
+
+sections.LegitSec:AddColor({
+    enabled = true,
+    text = "Fov Color",
+    flag = "fovColorPick",
+    tooltip = "Color Picker For Fov Circle",
+    color = Color3.new(1, 1, 1),
+    trans = 0,
+    open = false,
+    callback = function(c)
+        print("Fov Color Is Now : ", c)
+        aimbot.FovColor = c
+    end
+})
+
+sections.RageSec:AddSeparator({
+    text = "SilentAim"
+})
+
+
+--//-------MOVEMENT-------\\--
+
 sections.MovementSec:AddSeparator({
-	text = "Separator"
+	text = "WalkSpeed"
 })
 
 sections.MovementSec:AddBind({
@@ -76,6 +181,8 @@ sections.MovementSec:AddSlider({
         vars.WS = ws
 	end
 })
+
+--//-------VISUALS-------\\--
 
 sections.VisualSec:AddSeparator({
     text = "Chams"
@@ -118,7 +225,6 @@ sections.VisualSec:AddToggle({
     tooltip = "Toggles ESP",
     risky = false,
     callback = function(val)
-        print("ESP Is Now : ", val)
         esp.Enabled = val
     end
 })
@@ -137,29 +243,10 @@ sections.VisualSec:AddColor({
     end
 })
 
-sections.VisualSec:AddList({
-	enabled = true,
-	text = "ESP Flags",
-	flag = "flagsSelector",
-	multi = true,
-	tooltip = "Selects Flags For ESP",
-    risky = false,
-    dragging = false,
-    focused = false,
-	value = nil,
-	values = {
-		"Name",
-		"Team",
-		"Distance",
-        "Health"
-	},
-	callback = function(v)
-        for _, z in pairs(v) do
-            print(z)
-        end
+--//-------MISC-------\\--
 
-        esp.UpdateFlags(v)
-	end
+sections.VisualSec:AddSeparator({
+    text = "Misc"
 })
 
 sections.VisualSec:AddBox({
